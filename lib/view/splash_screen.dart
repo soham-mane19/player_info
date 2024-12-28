@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:player_info/view/HomeScreen.dart';
 import 'package:player_info/view/loginScreen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -27,9 +29,12 @@ animationController.forward();
     super.initState();
   }
    void registerScreen() {
-    Future.delayed(Duration(seconds: 7),(){
+    Future.delayed(Duration(seconds: 7),()async{
+       SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+      bool login =   sharedPreferences.getBool('login') ??false;
       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
-        return LoginScreen();
+       
+        return   login ? Homescreen(): LoginScreen();
       },)); 
     });
    }
